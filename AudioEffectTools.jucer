@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="RRYAGD" name="AudioEffectTools" projectType="guiapp" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
+  <MAINGROUP id="oQ8igg" name="AudioEffectTools">
+    <FILE id="XYv0Da" name="icon.png" compile="0" resource="1" file="Source/icon.png"/>
+    <GROUP id="{D2EFF800-BDBD-2C2B-6C7C-BCEE8F5AEFD6}" name="Source">
+      <GROUP id="{A596FF74-9739-60FE-15BB-510689F4182F}" name="EffectExternal">
+        <FILE id="gWPMkz" name="NoiseSuppressionProcessor.cpp" compile="1"
+              resource="0" file="Source/EffectExternal/NoiseSuppressionProcessor.cpp"/>
+        <FILE id="r2azfz" name="NoiseSuppressionProcessor.h" compile="0" resource="0"
+              file="Source/EffectExternal/NoiseSuppressionProcessor.h"/>
+        <FILE id="xFPWRX" name="RnNoiseEffectPlugin.cpp" compile="1" resource="0"
+              file="Source/EffectExternal/RnNoiseEffectPlugin.cpp"/>
+        <FILE id="vfjpvR" name="RnNoiseEffectPlugin.h" compile="0" resource="0"
+              file="Source/EffectExternal/RnNoiseEffectPlugin.h"/>
+      </GROUP>
+      <GROUP id="{89CCBEFF-B6CD-D29F-3198-D95BF41D6E5D}" name="RNNoise">
+        <GROUP id="{12A0E04B-0796-BFC6-65B9-404D80DDE6F7}" name="x86">
+          <FILE id="RH4Gny" name="dnn_x86.h" compile="0" resource="0" file="Source/RNNoise/x86/dnn_x86.h"/>
+          <FILE id="q5IeQ4" name="x86_arch_macros.h" compile="0" resource="0"
+                file="Source/RNNoise/x86/x86_arch_macros.h"/>
+          <FILE id="FnGn34" name="x86cpu.h" compile="0" resource="0" file="Source/RNNoise/x86/x86cpu.h"/>
+        </GROUP>
+        <FILE id="bm7VRy" name="_kiss_fft_guts.h" compile="0" resource="0"
+              file="Source/RNNoise/_kiss_fft_guts.h"/>
+        <FILE id="TY1SiD" name="arch.h" compile="0" resource="0" file="Source/RNNoise/arch.h"/>
+        <FILE id="t02aDh" name="celt_lpc.c" compile="1" resource="0" file="Source/RNNoise/celt_lpc.c"/>
+        <FILE id="O05RFd" name="celt_lpc.h" compile="0" resource="0" file="Source/RNNoise/celt_lpc.h"/>
+        <FILE id="fzEGEK" name="common.h" compile="0" resource="0" file="Source/RNNoise/common.h"/>
+        <FILE id="G2s1EH" name="cpu_support.h" compile="0" resource="0" file="Source/RNNoise/cpu_support.h"/>
+        <FILE id="CelqKr" name="denoise.c" compile="1" resource="0" file="Source/RNNoise/denoise.c"/>
+        <FILE id="eWYWti" name="denoise.h" compile="0" resource="0" file="Source/RNNoise/denoise.h"/>
+        <FILE id="HBsUUt" name="kiss_fft.c" compile="1" resource="0" file="Source/RNNoise/kiss_fft.c"/>
+        <FILE id="ExCXms" name="kiss_fft.h" compile="0" resource="0" file="Source/RNNoise/kiss_fft.h"/>
+        <FILE id="LOkWp0" name="nnet.c" compile="1" resource="0" file="Source/RNNoise/nnet.c"/>
+        <FILE id="PW1teN" name="nnet.h" compile="0" resource="0" file="Source/RNNoise/nnet.h"/>
+        <FILE id="ipn8JO" name="nnet_arch.h" compile="0" resource="0" file="Source/RNNoise/nnet_arch.h"/>
+        <FILE id="eS4tsy" name="nnet_default.c" compile="1" resource="0" file="Source/RNNoise/nnet_default.c"/>
+        <FILE id="xIfRV8" name="opus_types.h" compile="0" resource="0" file="Source/RNNoise/opus_types.h"/>
+        <FILE id="KhSynq" name="parse_lpcnet_weights.c" compile="1" resource="0"
+              file="Source/RNNoise/parse_lpcnet_weights.c"/>
+        <FILE id="ZdB8Ie" name="pitch.c" compile="1" resource="0" file="Source/RNNoise/pitch.c"/>
+        <FILE id="f2gg05" name="pitch.h" compile="0" resource="0" file="Source/RNNoise/pitch.h"/>
+        <FILE id="gtgkty" name="rnn.c" compile="1" resource="0" file="Source/RNNoise/rnn.c"/>
+        <FILE id="lTwKcJ" name="rnn.h" compile="0" resource="0" file="Source/RNNoise/rnn.h"/>
+        <FILE id="lMdRO7" name="rnnoise.h" compile="0" resource="0" file="Source/RNNoise/rnnoise.h"/>
+        <FILE id="tfrxCF" name="rnnoise_data.c" compile="1" resource="0" file="Source/RNNoise/rnnoise_data.c"/>
+        <FILE id="q89Syq" name="rnnoise_data.h" compile="0" resource="0" file="Source/RNNoise/rnnoise_data.h"/>
+        <FILE id="qyP8cT" name="rnnoise_tables.c" compile="1" resource="0"
+              file="Source/RNNoise/rnnoise_tables.c"/>
+        <FILE id="ZZL2Fp" name="vec.h" compile="0" resource="0" file="Source/RNNoise/vec.h"/>
+        <FILE id="jpBrlt" name="vec_avx.h" compile="0" resource="0" file="Source/RNNoise/vec_avx.h"/>
+        <FILE id="FKTL4t" name="vec_neon.h" compile="0" resource="0" file="Source/RNNoise/vec_neon.h"/>
+      </GROUP>
+      <GROUP id="{D81B1E95-6CA0-2E46-F756-58AD6D9C8131}" name="EffectJUCE">
+        <FILE id="luq5NL" name="IIRFilterProcessor.cpp" compile="1" resource="0"
+              file="Source/EffectJUCE/IIRFilterProcessor.cpp"/>
+        <FILE id="OBnSFc" name="IIRFilterProcessor.h" compile="0" resource="0"
+              file="Source/EffectJUCE/IIRFilterProcessor.h"/>
+        <FILE id="wL8mJB" name="LimiterProcessor.cpp" compile="1" resource="0"
+              file="Source/EffectJUCE/LimiterProcessor.cpp"/>
+        <FILE id="oxyGCr" name="LimiterProcessor.h" compile="0" resource="0"
+              file="Source/EffectJUCE/LimiterProcessor.h"/>
+      </GROUP>
+      <GROUP id="{DBEA1D9F-7D70-BD49-F256-56154813B09D}" name="SweepTestWindow">
+        <FILE id="cM3G93" name="SweepTestAnalyzer.cpp" compile="1" resource="0"
+              file="Source/SweepTestWindow/SweepTestAnalyzer.cpp"/>
+        <FILE id="Zs1eJE" name="SweepTestAnalyzer.h" compile="0" resource="0"
+              file="Source/SweepTestWindow/SweepTestAnalyzer.h"/>
+        <FILE id="RS69de" name="SweepTestGenerator.cpp" compile="1" resource="0"
+              file="Source/SweepTestWindow/SweepTestGenerator.cpp"/>
+        <FILE id="z2mm3d" name="SweepTestGenerator.h" compile="0" resource="0"
+              file="Source/SweepTestWindow/SweepTestGenerator.h"/>
+      </GROUP>
+      <GROUP id="{4E996A2C-D200-F64D-9847-B126E269E32C}" name="EQWindow">
+        <FILE id="B7ZwVC" name="EQControls.cpp" compile="1" resource="0" file="Source/EQWindow/EQControls.cpp"/>
+        <FILE id="DwpwtW" name="EQControls.h" compile="0" resource="0" file="Source/EQWindow/EQControls.h"/>
+        <FILE id="Ck2UEe" name="EQWindow.cpp" compile="1" resource="0" file="Source/EQWindow/EQWindow.cpp"/>
+        <FILE id="YE1IPb" name="EQWindow.h" compile="0" resource="0" file="Source/EQWindow/EQWindow.h"/>
+        <FILE id="PdlIQq" name="FrequencyResponseDisplay.cpp" compile="1" resource="0"
+              file="Source/EQWindow/FrequencyResponseDisplay.cpp"/>
+        <FILE id="jV2qEw" name="FrequencyResponseDisplay.h" compile="0" resource="0"
+              file="Source/EQWindow/FrequencyResponseDisplay.h"/>
+      </GROUP>
+      <GROUP id="{77833249-91C2-AB3E-0BD2-F013E646918C}" name="EffectEmbeded">
+        <FILE id="OPyJIg" name="effect_cathedral_reverb.c" compile="1" resource="0"
+              file="Source/EffectEmbeded/effect_cathedral_reverb.c"/>
+        <FILE id="x0avQu" name="effect_cathedral_reverb.h" compile="0" resource="0"
+              file="Source/EffectEmbeded/effect_cathedral_reverb.h"/>
+        <FILE id="mbX2ar" name="effect_delay.c" compile="1" resource="0" file="Source/EffectEmbeded/effect_delay.c"/>
+        <FILE id="IQDktJ" name="effect_delay.h" compile="0" resource="0" file="Source/EffectEmbeded/effect_delay.h"/>
+        <FILE id="BePo2Q" name="project_common.h" compile="0" resource="0"
+              file="Source/EffectEmbeded/project_common.h"/>
+        <FILE id="NN7wbt" name="project_config.h" compile="0" resource="0"
+              file="Source/EffectEmbeded/project_config.h"/>
+      </GROUP>
+      <GROUP id="{21886F59-3A39-F213-8788-E7DA8AE5B46B}" name="SignalGeneratorWindow">
+        <FILE id="jQjQ1w" name="AudioEngine.cpp" compile="1" resource="0" file="Source/SignalGeneratorWindow/AudioEngine.cpp"/>
+        <FILE id="NO5W9X" name="AudioEngine.h" compile="0" resource="0" file="Source/SignalGeneratorWindow/AudioEngine.h"/>
+        <FILE id="oh1RpW" name="SignalGeneratorComponent.cpp" compile="1" resource="0"
+              file="Source/SignalGeneratorWindow/SignalGeneratorComponent.cpp"/>
+        <FILE id="cdZvey" name="SignalGeneratorComponent.h" compile="0" resource="0"
+              file="Source/SignalGeneratorWindow/SignalGeneratorComponent.h"/>
+        <FILE id="mFB541" name="SignalGeneratorCore.cpp" compile="1" resource="0"
+              file="Source/SignalGeneratorWindow/SignalGeneratorCore.cpp"/>
+        <FILE id="ni1x9w" name="SignalGeneratorCore.h" compile="0" resource="0"
+              file="Source/SignalGeneratorWindow/SignalGeneratorCore.h"/>
+        <FILE id="fRzuPD" name="SignalGenWindow.h" compile="0" resource="0"
+              file="Source/SignalGeneratorWindow/SignalGenWindow.h"/>
+      </GROUP>
+      <FILE id="Q9ImnM" name="MainComponentEffectsStereo.cpp" compile="1"
+            resource="0" file="Source/MainComponentEffectsStereo.cpp"/>
+      <FILE id="XftiHa" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="KxwReM" name="WaveformAnalyzer.cpp" compile="1" resource="0"
+            file="Source/WaveformAnalyzer.cpp"/>
+      <FILE id="W0hoAP" name="WaveformAnalyzer.h" compile="0" resource="0"
+            file="Source/WaveformAnalyzer.h"/>
+      <FILE id="AR001" name="AudioRecorder.cpp" compile="1" resource="0"
+            file="Source/AudioRecorder.cpp"/>
+      <FILE id="AR002" name="AudioRecorder.h" compile="0" resource="0" file="Source/AudioRecorder.h"/>
+      <FILE id="WWmbyv" name="SpectrumAnalyzer.cpp" compile="1" resource="0"
+            file="Source/SpectrumAnalyzer.cpp"/>
+      <FILE id="GW4DVF" name="SpectrumAnalyzer.h" compile="0" resource="0"
+            file="Source/SpectrumAnalyzer.h"/>
+      <FILE id="f8cl1I" name="MainComponentCallbacks.cpp" compile="1" resource="0"
+            file="Source/MainComponentCallbacks.cpp"/>
+      <FILE id="akw9ZW" name="MainComponentEffects.cpp" compile="1" resource="0"
+            file="Source/MainComponentEffects.cpp"/>
+      <FILE id="SEayDQ" name="MainComponentLayout.cpp" compile="1" resource="0"
+            file="Source/MainComponentLayout.cpp"/>
+      <FILE id="PCWfM9" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="eV5Tl9" name="MainComponent.cpp" compile="1" resource="0"
+            file="Source/MainComponent.cpp"/>
+    </GROUP>
+    <FILE id="C8bDGs" name="icon.ico" compile="0" resource="1" file="Source/icon.ico"/>
+  </MAINGROUP>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+  </MODULES>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
+  <EXPORTFORMATS>
+    <VS2022 targetFolder="Builds/VisualStudio2022" smallIcon="XYv0Da" bigIcon="XYv0Da"
+            icon="C8bDGs" extraPreprocessorDefinitions="JUCE_DISABLE_ACCESSIBILITY=1">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="AudioEffectTools"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="AudioEffectTools"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2022>
+  </EXPORTFORMATS>
+</JUCERPROJECT>

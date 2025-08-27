@@ -1,0 +1,210 @@
+name: Build JUCE Application
+
+on:
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'Build Configuration'
+        required: true
+        default: 'Release'
+        type: choice
+        options:
+          - Debug
+          - Release
+      platform:
+        description: 'Target Platform'
+        required: true
+        default: 'x64'
+        type: choice
+        options:
+          - x64
+          - Win32
+      version:
+        description: 'Version Number (e.g., 1.0.0, 2.1.3)'
+        required: false
+        default: '0.1.0'
+        type: string
+      version_suffix:
+        description: 'Version Suffix (e.g., beta, alpha, rc1)'
+        required: false
+        default: ''
+        type: string
+
+env:
+  BUILD_TYPE: ${{ github.event.inputs.build_type || 'Release' }}
+  BUILD_PLATFORM: ${{ github.event.inputs.platform || 'x64' }}
+  SOLUTION_FILE: Builds\VisualStudio2022\AudioEffectTools.sln
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        fetch-depth: 0
+    
+    - name: Verify JUCE Submodule
+      run: |
+        echo "Checking JUCE submodule..."
+        if (Test-Path "JUCE\modules\juce_core\juce_core.h") {
+          echo "JUCE submodule is properly initialized"
+          echo "JUCE modules found:"
+          Get-ChildItem "JUCE\modules" -Directory | Select-Object -Property Name | Select-Object -First 10
+        } else {
+          echo "JUCE submodule not found, initializing..."
+          git submodule update --init --recursive
+          
+          if (Test-Path "JUCE\modules\juce_core\juce_core.h") {
+            echo "JUCE submodule initialized successfully"
+          } else {
+            echo "ERROR: Failed to initialize JUCE submodule"
+            exit 1
+          }
+        }
+    
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+      with:
+        vs-version: '[17.0,18.0)'
+    
+    - name: Generate Version Info
+      id: version
+      run: |
+        # Get commit information
+        $commitHash = git rev-parse --short HEAD
+        $commitCount = git rev-list --count HEAD
+        $date = Get-Date -Format "yyyyMMdd.HHmm"
+        
+        # Get version from input or use default
+        $version = "${{ github.event.inputs.version }}"
+        if ([string]::IsNullOrWhiteSpace($version)) {
+          $version = "0.1.0"
+        }
+        
+        # Add version suffix if provided
+        $suffix = "${{ github.event.inputs.version_suffix }}"
+        if (![string]::IsNullOrWhiteSpace($suffix)) {
+          $fullVersion = "$version-$suffix"
+        } else {
+          $fullVersion = $version
+        }
+        
+        # Output version info using Out-File
+        echo "VERSION=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+        echo "VERSION_FULL=$fullVersion" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+        echo "BUILD_NUMBER=$date" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+        echo "COMMIT_HASH=$commitHash" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+        echo "COMMIT_COUNT=$commitCount" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+        
+        echo "Building version: $fullVersion (build: $date, commit: $commitHash)"
+    
+    - name: Build Project
+      run: |
+        echo "Building ${{ env.BUILD_TYPE }} | ${{ env.BUILD_PLATFORM }}..."
+        
+        cd Builds\VisualStudio2022
+        msbuild AudioEffectTools.sln `
+          /p:Configuration=${{ env.BUILD_TYPE }} `
+          /p:Platform=${{ env.BUILD_PLATFORM }} `
+          /m `
+          /v:minimal
+    
+    - name: Check Build Output
+      run: |
+        # Find generated exe files
+        $exePath = "Builds\VisualStudio2022\${{ env.BUILD_PLATFORM }}\${{ env.BUILD_TYPE }}\App"
+        
+        echo "Checking output path: $exePath"
+        
+        if (Test-Path $exePath) {
+          $exeFiles = Get-ChildItem -Path $exePath -Filter "*.exe"
+          if ($exeFiles) {
+            echo "Build successful! Found executables:"
+            $exeFiles | ForEach-Object { 
+              $sizeMB = [math]::Round($_.Length/1MB, 2)
+              echo "  - $($_.Name) (Size: $sizeMB MB)"
+            }
+          } else {
+            echo "No .exe files found in expected directory"
+          }
+        } else {
+          echo "Output directory not found, searching for .exe files..."
+          Get-ChildItem -Path "Builds\VisualStudio2022" -Filter "*.exe" -Recurse | Select-Object FullName
+        }
+    
+    - name: Package Application
+      run: |
+        $version = "${{ steps.version.outputs.VERSION_FULL }}"
+        if ([string]::IsNullOrWhiteSpace($version)) {
+          $version = "${{ steps.version.outputs.VERSION }}"
+        }
+        $buildNum = "${{ steps.version.outputs.BUILD_NUMBER }}"
+        $packageName = "AudioEffectTool-v$version-${{ env.BUILD_PLATFORM }}-${{ env.BUILD_TYPE }}"
+        
+        echo "Creating package: $packageName"
+        
+        # Create output directory
+        New-Item -ItemType Directory -Path "Output\$packageName" -Force | Out-Null
+        
+        # Copy build artifacts
+        $sourcePath = "Builds\VisualStudio2022\${{ env.BUILD_PLATFORM }}\${{ env.BUILD_TYPE }}\App"
+        
+        if (Test-Path $sourcePath) {
+          Copy-Item "$sourcePath\*.exe" "Output\$packageName\" -ErrorAction SilentlyContinue
+          Copy-Item "$sourcePath\*.dll" "Output\$packageName\" -ErrorAction SilentlyContinue
+          
+          # List copied files
+          $copiedFiles = Get-ChildItem "Output\$packageName\*"
+          if ($copiedFiles) {
+            echo "Copied files:"
+            $copiedFiles | ForEach-Object { echo "  - $($_.Name)" }
+          }
+        } else {
+          echo "Warning: Source path not found: $sourcePath"
+        }
+        
+        # Create version info file (using simple approach)
+        $versionInfo = "AudioEffectTool`n"
+        $versionInfo += "==============`n"
+        $versionInfo += "Version: $version`n"
+        $versionInfo += "Build: $buildNum`n"
+        $versionInfo += "Configuration: ${{ env.BUILD_TYPE }}`n"
+        $versionInfo += "Platform: ${{ env.BUILD_PLATFORM }}`n"
+        $versionInfo += "Commit: ${{ steps.version.outputs.COMMIT_HASH }}`n"
+        $versionInfo += "Build Date: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')`n"
+        
+        $versionInfo | Out-File "Output\$packageName\version.txt" -Encoding UTF8
+        
+        # Create ZIP archive
+        if (Test-Path "Output\$packageName\*.exe") {
+          Compress-Archive -Path "Output\$packageName\*" -DestinationPath "Output\$packageName.zip"
+          
+          $zipSize = (Get-Item "Output\$packageName.zip").Length / 1MB
+          $zipSizeMB = [math]::Round($zipSize, 2)
+          echo "Package created: $packageName.zip (Size: $zipSizeMB MB)"
+        } else {
+          echo "Warning: No executable files to package"
+        }
+    
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      if: success()
+      with:
+        name: AudioEffectTool-${{ steps.version.outputs.VERSION_FULL }}-${{ env.BUILD_PLATFORM }}-${{ env.BUILD_TYPE }}
+        path: Output/*.zip
+        retention-days: 30
+        if-no-files-found: warn
+    
+    - name: Upload Debug Symbols
+      uses: actions/upload-artifact@v4
+      if: env.BUILD_TYPE == 'Debug'
+      with:
+        name: Debug-Symbols-${{ env.BUILD_PLATFORM }}
+        path: |
+          Builds\VisualStudio2022\${{ env.BUILD_PLATFORM }}\${{ env.BUILD_TYPE }}\**\*.pdb
+        retention-days: 7
+        if-no-files-found: ignore

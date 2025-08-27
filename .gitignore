@@ -1,0 +1,19 @@
+**/cmake-build-debug
+**/.idea
+**/.DS_Store
+# **/builds
+**/cmake-build-debug-coverage
+**/cmake-build-debug-coverage-1
+**/._*
+.vs/
+out/
+CMakeSettings.json
+build/
+.codebuddy
+.vscode
+**/Debug
+**/Release
+**/*.wav
+**/x64
+**/cmake_build
+CMakeLists.txt
